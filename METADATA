@@ -1,0 +1,17 @@
+name: "gmmlib"
+description:
+    "The Intel(R) Graphics Memory Management Library provides device specific "
+    "and buffer management for the Intel(R) Graphics Compute Runtime for "
+    "OpenCL(TM) and the Intel(R) Media Driver for VAAPI."
+
+third_party {
+  identifier {
+    type: "Git"
+    value: "https://github.com/intel/gmmlib"
+    primary_source: true
+    version: "5fb4180e22695ad4e3c155cf680119913c9f44bc"
+  }
+  version: "5fb4180e22695ad4e3c155cf680119913c9f44bc"
+  last_upgrade_date { year: 2024 month: 7 day: 9 }
+  license_type: NOTICE
+}
