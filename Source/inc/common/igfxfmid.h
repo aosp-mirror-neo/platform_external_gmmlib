@@ -77,7 +77,9 @@ typedef enum {
     IGFX_PVC = 1271,
     IGFX_METEORLAKE = 1272,
     IGFX_ARROWLAKE = 1273,
-
+    IGFX_BMG = 1274,
+    IGFX_LUNARLAKE = 1275,
+    
     IGFX_MAX_PRODUCT,
     IGFX_GENNEXT               = 0x7ffffffe,
     PRODUCT_FAMILY_FORCE_ULONG = 0x7fffffff
@@ -137,7 +139,9 @@ typedef enum {
     IGFX_XE_HP_CORE      = 0x0c05,  //XE_HP family
     IGFX_XE_HPG_CORE     = 0x0c07,  // XE_HPG Family
     IGFX_XE_HPC_CORE     = 0x0c08,  // XE_HPC Family
-                                
+    IGFX_XE2_LPG_CORE    = 0x0c09,  // XE2_LPG Family
+    IGFX_XE2_HPG_CORE    = IGFX_XE2_LPG_CORE,  //XE2_HPG Family
+
     //Please add new GENs BEFORE THIS !
     IGFX_MAX_CORE,
 
@@ -296,7 +300,8 @@ typedef enum __NATIVEGTTYPE
 // This macro returns true if the product family is discrete
 #define GFX_IS_DISCRETE_PRODUCT(pf)    ( ( pf == IGFX_DG1 )             ||   \
                                          ( pf == IGFX_DG2 )             ||   \
-                                         ( pf == IGFX_XE_HP_SDV ) )
+                                         ( pf == IGFX_XE_HP_SDV )       ||   \
+                                         ( pf == IGFX_BMG ) )
 
 #define GFX_IS_DISCRETE_FAMILY(p)      GFX_IS_DISCRETE_PRODUCT(GFX_GET_CURRENT_PRODUCT(p))
 
@@ -325,6 +330,7 @@ typedef enum __NATIVEGTTYPE
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HP_CORE )   ||   \
                                          ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HPG_CORE )  ||   \
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HPC_CORE )  ||   \
+                                         ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE2_HPG_CORE ) ||   \
                                          ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_GENNEXT_CORE ) )
 
 #define GFX_IS_GEN_5_OR_LATER(p)       ( ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_GEN5_CORE )    ||   \
@@ -341,6 +347,7 @@ typedef enum __NATIVEGTTYPE
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HP_CORE )   ||   \
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HPG_CORE )  ||   \
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HPC_CORE )  ||   \
+                                         ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE2_HPG_CORE ) ||   \
                                          ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_GENNEXT_CORE ) )
 
 #define GFX_IS_GEN_5_75_OR_LATER(p)    ( ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_GEN5_75_CORE ) ||   \
@@ -355,6 +362,7 @@ typedef enum __NATIVEGTTYPE
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HP_CORE )   ||   \
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HPG_CORE )  ||   \
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HPC_CORE )  ||   \
+                                         ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE2_HPG_CORE ) ||   \
                                          ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_GENNEXT_CORE ) )
 
 #define GFX_IS_GEN_6_OR_LATER(p)       ( ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_GEN6_CORE )    ||   \
@@ -367,6 +375,7 @@ typedef enum __NATIVEGTTYPE
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HP_CORE )   ||   \
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HPG_CORE )  ||   \
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HPC_CORE )  ||   \
+                                         ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE2_HPG_CORE ) ||   \
                                          ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_GENNEXT_CORE ) )
 
 #define GFX_IS_GEN_7_OR_LATER(p)       ( ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_GEN7_CORE )    ||   \
@@ -379,6 +388,7 @@ typedef enum __NATIVEGTTYPE
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HP_CORE )   ||   \
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HPG_CORE )  ||   \
 					 ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE_HPC_CORE )  ||   \
+                                         ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_XE2_HPG_CORE ) ||  \
                                          ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_GENNEXT_CORE ) )
 
 #define GFX_IS_GEN_7_5_OR_LATER(p)     ( ( GFX_GET_CURRENT_RENDERCORE(p) == IGFX_GEN7_5_CORE )  ||  \
@@ -1886,6 +1896,7 @@ typedef enum __NATIVEGTTYPE
 #define DEV_ID_0BDB                            0x0BDB
 #define DEV_ID_0B69                            0x0B69
 #define DEV_ID_0B6E                            0x0B6E
+#define DEV_ID_0BD4                            0x0BD4
 
 // Macro to identify PVC device ID
 #define GFX_IS_XT_CONFIG(d) ((d == DEV_ID_0BD5)             ||  \
@@ -1896,7 +1907,8 @@ typedef enum __NATIVEGTTYPE
                              (d == DEV_ID_0BDA)             ||  \
                              (d == DEV_ID_0BDB)		    ||  \
                              (d == DEV_ID_0B69)             ||  \
-			     (d == DEV_ID_0B6E))
+			     (d == DEV_ID_0B6E)             ||  \
+			     (d == DEV_ID_0BD4))
 
 //DG2 Device IDs
 #define DEV_ID_4F80                             0x4F80
@@ -1932,8 +1944,11 @@ typedef enum __NATIVEGTTYPE
 #define DEV_ID_56BB                             0x56BB
 #define DEV_ID_56BC                             0x56BC
 #define DEV_ID_56BD                             0x56BD
+#define DEV_ID_56BE                             0x56BE
+#define DEV_ID_56BF                             0x56BF
 #define DEV_ID_56C0                             0x56C0
 #define DEV_ID_56C1                             0x56C1
+#define DEV_ID_56C2                             0x56C2
 
 // RPL-P/U
 #define DEV_ID_A7A0                             0xA7A0
@@ -1951,6 +1966,8 @@ typedef enum __NATIVEGTTYPE
 #define DEV_ID_46D0                             0x46D0
 #define DEV_ID_46D1                             0x46D1
 #define DEV_ID_46D2                             0x46D2
+#define DEV_ID_46D3                             0x46D3
+#define DEV_ID_46D4                             0x46D4
 
 // MTL
 #define DEV_ID_7D40                             0x7D40
@@ -1963,6 +1980,23 @@ typedef enum __NATIVEGTTYPE
 
 // ARL-S
 #define DEV_ID_7D67                             0x7D67
+
+// ARL-H
+#define DEV_ID_7D41                             0x7D41
+#define DEV_ID_7D51                             0x7D51
+#define DEV_ID_7DD1                             0x7DD1
+
+// LNL
+#define DEV_ID_64A0                             0x64A0
+#define DEV_ID_6420                             0x6420
+#define DEV_ID_64B0                             0x64B0
+
+//BMG
+#define DEV_ID_E202                             0xE202
+#define DEV_ID_E20B                             0xE20B
+#define DEV_ID_E20C                             0xE20C
+#define DEV_ID_E20D                             0xE20D
+#define DEV_ID_E212                             0xE212
 
 #define MGM_HAS     0
 
@@ -1977,7 +2011,11 @@ typedef enum __NATIVEGTTYPE
                                  ( d == DEV_ID_5695 )             ||   \
                                  ( d == DEV_ID_56B0 )             ||   \
                                  ( d == DEV_ID_56B1 )             ||   \
-                                 ( d == DEV_ID_56C1 )             ||   \
+                                 ( d == DEV_ID_56BA )             ||   \
+                                 ( d == DEV_ID_56BB )             ||   \
+                                 ( d == DEV_ID_56BC )             ||   \
+                                 ( d == DEV_ID_56BD )             ||   \
+				 ( d == DEV_ID_56C1 )             ||   \
                                  ( d == DEV_ID_4F87 )             ||   \
                                  ( d == DEV_ID_4F88 ))
 
@@ -1987,7 +2025,10 @@ typedef enum __NATIVEGTTYPE
                                       ( d == DEV_ID_5690 )                              ||   \
                                       ( d == DEV_ID_5691 )                              ||   \
                                       ( d == DEV_ID_5692 )                              ||   \
-                                      ( d == DEV_ID_56C0 )                              ||   \
+                                      ( d == DEV_ID_56BE )                              ||   \
+                                      ( d == DEV_ID_56BF )                              ||   \
+				      ( d == DEV_ID_56C0 )                              ||   \
+	                              ( d == DEV_ID_56C2 )                              ||   \
                                       ( d == DEV_ID_4F80 )                              ||   \
                                       ( d == DEV_ID_4F81 )                              ||   \
                                       ( d == DEV_ID_4F82 )                              ||   \
@@ -2005,6 +2046,11 @@ typedef enum __NATIVEGTTYPE
 
 // Macro to identify ARL-S Device ID
 #define GFX_IS_ARL_S(d)  ( ( d == DEV_ID_7D67 ) )
+
+// Macro to identify ARL-H Device ID
+#define GFX_IS_ARL_H(d)  ( ( d == DEV_ID_7D41 )  ||   \
+                         ( d == DEV_ID_7D51 )    ||   \
+                         ( d == DEV_ID_7DD1 ))
 
 //we define the highest cap and lower cap of stepping IDs
 #define SI_REV_ID(lo,hi) (lo | hi<<16)
