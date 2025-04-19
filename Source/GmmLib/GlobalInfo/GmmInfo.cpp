@@ -1005,7 +1005,16 @@ GMM_CLIENT               ClientType)
     this->SkuTable  = *pSkuTable;
     this->WaTable   = *pWaTable;
     this->GtSysInfo = *pGtSysInfo;
-    
+   
+    if (GFX_GET_CURRENT_RENDERCORE(Platform) >= IGFX_XE2_HPG_CORE && (pSkuTable->FtrXe2Compression == false))
+    {
+        this->SkuTable.FtrXe2Compression = true;
+        if (!(this->GetSkuTable().FtrFlatPhysCCS) || !(this->GetSkuTable().FtrE2ECompression))
+        {
+            SkuTable.FtrXe2Compression = false;
+        }
+    }
+
     this->pPlatformInfo = CreatePlatformInfo(Platform, false);
     if(this->pPlatformInfo == NULL)
     {
@@ -1101,6 +1110,7 @@ GMM_CACHE_POLICY *GMM_STDCALL GmmLib::Context::CreateCachePolicyCommon()
         switch(GFX_GET_CURRENT_RENDERCORE(this->GetPlatformInfo().Platform))
         {
             case IGFX_XE2_HPG_CORE:
+            case IGFX_XE3_CORE:
                 pGmmCachePolicy = new GmmLib::GmmXe2_LPGCachePolicy(CachePolicy, this);
                 break;
             case IGFX_GEN12LP_CORE:
@@ -1181,6 +1191,7 @@ GMM_TEXTURE_CALC *GMM_STDCALL GmmLib::Context::CreateTextureCalc(PLATFORM Platfo
                  return new GmmGen12TextureCalc(this);
 				 break;
             case IGFX_XE2_HPG_CORE:
+	    case IGFX_XE3_CORE:
             default:
                 return new GmmXe_LPGTextureCalc(this);
                 break;
@@ -1216,6 +1227,7 @@ GMM_PLATFORM_INFO_CLASS *GMM_STDCALL GmmLib::Context::CreatePlatformInfo(PLATFOR
         case IGFX_XE_HPG_CORE:
         case IGFX_XE_HPC_CORE:
         case IGFX_XE2_HPG_CORE:
+	case IGFX_XE3_CORE:
             return new GmmLib::PlatformInfoGen12(Platform, (GMM_LIB_CONTEXT *)this);
             break;
         case IGFX_GEN11_CORE:
