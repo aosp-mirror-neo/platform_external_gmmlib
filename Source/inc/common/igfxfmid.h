@@ -2000,7 +2000,14 @@ typedef enum __NATIVEGTTYPE
 #define DEV_ID_E20B                             0xE20B
 #define DEV_ID_E20C                             0xE20C
 #define DEV_ID_E20D                             0xE20D
+#define DEV_ID_E210                             0xE210
+#define DEV_ID_E211                             0xE211	
 #define DEV_ID_E212                             0xE212
+#define DEV_ID_E216                             0xE216
+#define DEV_ID_E220                             0xE220
+#define DEV_ID_E221                             0xE221
+#define DEV_ID_E222                             0xE222
+#define DEV_ID_E223                             0xE223
 
 // PTL
 #define DEV_ID_B080                             0xB080
@@ -2011,6 +2018,10 @@ typedef enum __NATIVEGTTYPE
 #define DEV_ID_B090                             0xB090
 #define DEV_ID_B0A0                             0xB0A0
 #define DEV_ID_B0B0                             0xB0B0
+	
+// WCL
+#define DEV_ID_FD80                             0xFD80
+#define DEV_ID_FD81                             0xFD81	
 
 #define MGM_HAS     0
 
