@@ -8,13 +8,13 @@ third_party {
   license_type: NOTICE
   last_upgrade_date {
     year: 2025
-    month: 7
-    day: 14
+    month: 12
+    day: 5
   }
   identifier {
     type: "Git"
     value: "https://github.com/intel/gmmlib"
-    version: "intel-gmmlib-22.8.0"
+    version: "intel-gmmlib-22.8.2"
     primary_source: true
   }
 }
