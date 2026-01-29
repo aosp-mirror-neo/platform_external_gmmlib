@@ -14,7 +14,8 @@ third_party {
   identifier {
     type: "Git"
     value: "https://github.com/intel/gmmlib"
-    version: "intel-gmmlib-22.8.2"
+    version: "5a83d3f8b325b3594e863b209b5192ac1ca8b7c2"
+    closest_version: "intel-gmmlib-22.8.2"
     primary_source: true
   }
 }
